@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en"> <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="i18n-title">Edifer Vásquez — Portafolio de Editor de Video Experto</title>
+    <meta name="description" id="i18n-meta-desc" content="Edición profesional para Shorts, Reels y TikTok. Especialista en retención y alta conversión." />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        /* =========================
+           BASE / VARIABLES
+           ========================= */
+        :root {
+            --bg: #07060a;
+            --card-bg: #0e0d14;
+            --text-primary: #ffffff;
+            --text-secondary: #bfc5d8;
+            --accent1: #e24da8;
+            --accent2: #6b8cff;
+            --radius: 12px;
+            /* Ancho máximo aumentado a 1600px */
+            --max-w: 1600px; 
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.4); 
+            --glow: 0 6px 20px rgba(226,77,168,0.18), inset 0 -6px 14px rgba(226,77,168,0.04);
+            --transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(800px 400px at 90% 10%, rgba(107,140,255,0.06), transparent),
+                        radial-gradient(700px 300px at 10% 90%, rgba(226,77,168,0.05), transparent),
+                        var(--bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            /* Padding ajustado para márgenes mínimos */
+            padding: 2rem 2rem; 
+        }
+
+        .container { 
+            width: 100%; 
+            max-width: var(--max-w); 
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--accent1), var(--accent2));
+            color: var(--bg);
+            /* Padding ajustado para dar más cuerpo a los botones */
+            padding: 0.8rem 1.6rem; 
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 800;
+            transition: var(--transition);
+            box-shadow: var(--glow);
+        }
+        .cta-button:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(226,77,168,0.3); }
+
+        /* =========================
+           HERO SECTION
+           ========================= */
+        .hero {
+            position: relative;
+            border-radius: var(--radius);
+            overflow: hidden;
+            min-height: 250px; 
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            z-index: 1;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-start;
+            padding: 20px;
+        }
+
+        .hero-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://raw.githubusercontent.com/ediferv22-lgtm/upwork/refs/heads/main/WhatsApp%20Image%202025-09-24%20at%205.45.31%20PM.jpeg');
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.8) grayscale(0.1);
+            z-index: 0;
+        }
+
+        .language-selector { position: relative; z-index: 10; margin: 0; }
+        .lang-button {
+            background: rgba(14, 13, 20, 0.7); 
+            backdrop-filter: blur(5px);
+            color: var(--text-primary);
+            border: 1px solid var(--accent1); 
+            padding: 6px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: background-color 0.2s;
+        }
+        .lang-button:hover { 
+            background: rgba(14, 13, 20, 0.9); 
+        }
+        
+        /* PROFILE SECTION */
+        .profile-section {
+            display: flex; 
+            align-items: stretch;
+            grid-template-columns: 3fr 1fr; 
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .profile-mini-banner {
+            background: linear-gradient(90deg, var(--accent1), var(--accent2));
+            color: #fff;
+            padding: 6px 15px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            z-index: 10;
+        }
+        
+        @media (max-width: 900px) {
+            .profile-section { 
+                display: grid; 
+                grid-template-columns: 1fr; 
+            }
+            .profile-card { order: -1; margin-bottom: 0; }
+            .profile-info { order: 0; margin-top: 2rem; }
+        }
+
+        @media (max-width: 768px) { .hero { display: none; } }
+
+        /* VIDEO PRINCIPAL (HORIZONTAL - 16:9) */
+        .profile-info {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 0;
+            box-shadow: var(--shadow);
+            flex: 3; 
+            display: flex;
+            flex-direction: column; 
+        }
+        
+        /* Contenido de relleno debajo del video: Relojes */
+        .video-padding-content {
+            padding: 2rem 1.5rem; 
+            flex-shrink: 0; 
+            color: var(--text-secondary);
+        }
+        
+        /* Contenedor Flex para la alineación horizontal de los relojes */
+        .clocks-container {
+            display: flex;
+            justify-content: space-between; 
+            gap: 10px; 
+            width: 100%;
+        }
+
+        /* **ESTILOS PARA RELOJ RECTANGULAR** */
+        .clock-display {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius); 
+            padding: 10px 5px;
+            flex: 1; 
+            text-align: center;
+            flex-direction: column; 
+            display: flex;
+            justify-content: center;
+        }
+        
+        /* Título del reloj */
+        .clock-display h4 {
+            font-size: 0.75rem; 
+            color: var(--accent1); 
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        /* Hora, Minutos, Segundos y AM/PM - DESKTOP */
+        .clock-display p {
+            font-size: 2.2rem; 
+            font-weight: 800;
+            color: var(--text-primary);
+            line-height: 1;
+        }
+        
+        /* Responsive adjustment for small screens (1 column) */
+        @media (max-width: 600px) {
+            .clocks-container {
+                flex-direction: column; 
+                gap: 1rem;
+            }
+            .clock-display {
+                width: 100%; 
+                padding: 0.75rem 1rem;
+            }
+            /* REDUCIDO: Tamaño del dígito en móvil */
+            .clock-display p {
+                font-size: 1.5rem; 
+            }
+        }
+        /* FIN ESTILOS DE RELOJ */
+
+        .video-container-autoplay {
+            width: 100%; height: 0;
+            padding-bottom: 56.25%; 
+            position: relative;
+            border-radius: var(--radius);
+            overflow: hidden;
+            flex-shrink: 0; 
+        }
+        .video-container-autoplay iframe {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            border: none; border-radius: var(--radius);
+        }
+
+        /* ESTILOS DE OVERLAY (RESTO DE ESTILOS NO MODIFICADOS) */
+        .video-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+        .video-overlay img {
+            width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8); transition: filter 0.2s ease;
+        }
+        .video-overlay:hover img { filter: brightness(0.9); }
+        .video-overlay button {
+            position: absolute; background: rgba(226, 77, 168, 0.8); border: none; border-radius: 50%;
+            width: 80px; height: 80px; font-size: 3rem; color: white; display: flex;
+            align-items: center; justify-content: center; cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); z-index: 2;
+        }
+        .video-overlay button:hover { transform: scale(1.05); background: var(--accent1); }
+
+        /* PROFILE CARD (Columna Derecha) */
+        .profile-card {
+            background: var(--card-bg); border-radius: var(--radius);
+            padding: 2.5rem 1.5rem 1.5rem;
+            display: flex; flex-direction: column; align-items: center;
+            text-align: center; gap: 1rem; box-shadow: var(--shadow);
+            position: relative; flex: 1; 
+        }
+        /* CAMBIO: Avatar más grande */
+        .avatar { width: 150px; height: 150px; border-radius: 50%; overflow: hidden; border: 4px solid var(--accent2); margin-top: 5px; }
+        .avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .profile-role { font-weight: 800; font-size: 1.1rem; }
+        .profile-card p.description { 
+            /* CAMBIO: Fuente más grande para la descripción */
+            font-size: 1.1rem; 
+            color: var(--text-secondary); 
+            margin-top: 0.75rem; /* Aumentado el margen superior */
+            margin-bottom: 1rem; 
+            line-height: 1.5; /* Aumentado line-height para legibilidad */
+        }
+
+        /* GALLERY (RESTO DE ESTILOS NO MODIFICADOS) */
+        .section-title { font-size: 2rem; font-weight: 800; margin-bottom: 1.5rem; border-left: 4px solid var(--accent1); padding-left: 10px; }
+        .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        @media (max-width: 900px) { .gallery { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px) { .gallery { grid-template-columns: 1fr; } }
+        .video-card { background: var(--card-bg); border-radius: var(--radius); cursor: pointer; transition: var(--transition); box-shadow: var(--shadow); }
+        .video-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(226,77,168,0.2); }
+        .video-thumbnail { width: 100%; height: 0; padding-bottom: 177.77%; position: relative; background-color: var(--card-bg); background-size: cover; background-position: center; background-repeat: no-repeat; border-radius: var(--radius) var(--radius) 0 0; overflow: hidden; }
+        .video-thumbnail::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.2); z-index: 1; pointer-events: none; border-radius: var(--radius) var(--radius) 0 0; }
+        .video-thumbnail::after { content: '▶'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 3rem; color: rgba(255, 255, 255, 0.9); text-shadow: 0 0 10px rgba(0, 0, 0, 0.8); pointer-events: none; z-index: 5; }
+        .video-info { padding: 1rem; }
+        .video-info h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .video-info p { font-size: 0.85rem; color: var(--text-secondary); }
+
+        /* CTA FLOTANTE Y LIGHTBOX (RESTO DE ESTILOS NO MODIFICADOS) */
+        #fixed-cta-button { position: fixed; bottom: 20px; left: 20px; background: linear-gradient(90deg, var(--accent1), var(--accent2)); color: var(--bg); width: 120px; height: 120px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; text-decoration: none; font-weight: 800; font-size: 0.9rem; padding: 10px; box-shadow: var(--glow); transform: scale(1); animation: pulse 2s infinite; z-index: 99; transition: transform 0.2s; line-height: 1.2; }
+        #fixed-cta-button:hover { transform: scale(1.05); animation: none; box-shadow: 0 8px 25px rgba(226,77,168,0.3); }
+        #fixed-cta-button span { display: block; margin-top: 5px; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(226, 77, 168, 0.7); } 70% { box-shadow: 0 0 0 25px rgba(226, 77, 168, 0); } 100% { box-shadow: 0 0 0 0 rgba(226, 77, 168, 0); } }
+        @media (max-width: 600px) { #fixed-cta-button { width: 100px; height: 100px; font-size: 0.8rem; } }
+        #scroll-to-top { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; font-size: 1.5rem; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 90; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s, transform 0.2s; transform: translateY(10px); background: linear-gradient(90deg, var(--accent1), var(--accent2)); color: var(--bg); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); }
+        #scroll-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
+        .final-cta { background: linear-gradient(90deg, var(--accent1), var(--accent2)); padding: 2rem; border-radius: var(--radius); text-align: center; margin-top: 3rem; margin-bottom: 2rem; box-shadow: var(--glow); }
+        .final-cta h2 { font-size: 1.8rem; margin-bottom: 1rem; color: var(--text-primary); }
+        /* Ajustar el botón final también para uniformidad */
+        .final-cta .cta-button { margin: 0 auto; background: var(--bg); color: var(--accent1); padding: 0.8rem 1.6rem; }
+        .final-cta .cta-button:hover { transform: translateY(-3px); background: #1a1a20; color: var(--accent2); }
+        footer { text-align: center; padding: 1.5rem 0; border-top: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-secondary); font-size: 0.8rem; }
+        .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+        .lightbox.active { display: flex; }
+        .lightbox-content { position: relative; width: 90%; max-width: min(450px, calc(90vh * 9 / 16)); max-height: 90vh; box-shadow: 0 0 40px rgba(0, 0, 0, 0.7); }
+        .lightbox-video-wrapper { width: 100%; height: 0; padding-bottom: 177.77%; position: relative; border-radius: var(--radius); overflow: hidden; }
+        .lightbox-content iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        .close-btn { position: absolute; top: -15px; right: -15px; background: var(--accent1); color: #fff; border: none; width: 30px; height: 30px; border-radius: 50%; font-size: 18px; cursor: pointer; }
+        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255, 255, 255, 0.1); color: var(--text-primary); border: none; padding: 15px 10px; font-size: 2rem; cursor: pointer; border-radius: 8px; display: none; }
+        .nav-btn:hover { background: rgba(255, 255, 255, 0.2); }
+        .prev-btn { left: 20px; } .next-btn { right: 20px; }
+        @media (min-width: 768px) { .nav-btn { display: block; } }
+        @media (max-width: 600px) { .lightbox-content { max-width: 90vw; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header style="display:none;"></header>
+
+        <section class="hero" id="hero-section">
+            <div class="hero-bg"></div>
+            <div class="language-selector"><button id="lang-toggle" class="lang-button" data-lang="en">ES / EN</button></div>
+            <div class="hero-content"></div>
+        </section>
+
+        <section class="profile-section">
+            <div class="profile-info">
+                
+                <div class="video-container-autoplay">
+                    
+                    <div class="video-overlay" id="main-video-overlay">
+                        <img src="https://github.com/ediferv22-lgtm/upwork/blob/main/WhatsApp%20Image%202025-09-24%20at%204.57.58%20PM.jpeg?raw=true" alt="Miniatura del video principal">
+                        <button id="play-main-video" aria-label="Reproducir video">▶</button>
+                    </div>
+
+                    <iframe 
+                        id="presentation-video"
+                        data-video-url="https://vimeo.com/1122090979" 
+                        src="about:blank"
+                        title="Video de Presentación" 
+                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        allowfullscreen
+                        style="display: none;"> 
+                    </iframe>
+                </div>
+
+                <div class="video-padding-content">
+                    <div class="clocks-container">
+                        <div class="clock-display">
+                            <h4 id="i18n-clock-ve">VENEZUELA (CCS)</h4>
+                            <p id="clock-ve" class="time-display">--:--:--</p>
+                        </div>
+                        <div class="clock-display">
+                            <h4 id="i18n-clock-na">ESTADOS UNIDOS (NYC)</h4>
+                            <p id="clock-na" class="time-display">--:--:--</p>
+                        </div>
+                        <div class="clock-display">
+                            <h4 id="i18n-clock-eu">ESPAÑA (MAD)</h4>
+                            <p id="clock-eu" class="time-display">--:--:--</p>
+                        </div>
+                        <div class="clock-display">
+                            <h4 id="i18n-clock-ch">CHINA (SHA)</h4>
+                            <p id="clock-ch" class="time-display">--:--:--</p>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+            <div class="profile-card">
+                <div class="profile-mini-banner" id="i18n-profile-cert">Certified Video Editor</div>
+                <div class="avatar"><img src="https://raw.githubusercontent.com/ediferv22-lgtm/upwork/refs/heads/main/WhatsApp%20Image%202025-09-21%20at%203.57.29%20PM%20(3).jpeg" alt="Foto de perfil de Edifer Vásquez"></div>
+                <h3 class="profile-role" id="i18n-profile-name">Edifer Vásquez</h3>
+                <p class="description" id="i18n-profile-desc">
+                    I'm a <strong>Certified Specialist</strong> focused exclusively on <strong>High-Impact Short-Form Content</strong> (YouTube Shorts, Reels, TikTok, and Facebook). My mission is to take your footage and transform it into <strong>high-retention, viral videos</strong> designed to boost <strong>engagement</strong> and conversion. I guarantee a <strong>professional workflow</strong> using <strong>CapCut Pro, Premiere Pro, After Effects, and KlingAI</strong> for the highest-quality results.
+                </p>
+                
+                <a href="javascript:history.back()" class="cta-button" id="i18n-send-prop-1" style="width:100%; box-shadow:none; margin-bottom: 0.5rem;">Accept Proposal</a>
+                
+                <a href="#portfolio-section" class="cta-button" id="i18n-view-portfolio" style="width:100%; background:rgba(255,255,255,0.1); color:var(--text-primary); margin-top:0.5rem; box-shadow:none;">View Portfolio</a>
+            </div>
+        </section>
+
+        <section id="portfolio-section">
+            <h2 class="section-title" id="i18n-section-portfolio">Featured Portfolio</h2>
+            <div class="gallery" id="gallery-container">
+                
+                <div class="video-card" 
+                    data-video-url="https://vimeo.com/1122092874" 
+                    data-thumb-url="https://github.com/ediferv22-lgtm/upwork/blob/main/thumb.jpg?raw=true">
+                    <div class="video-thumbnail"></div>
+                    <div class="video-info"><h3 id="i18n-video-title-1">Vimeo Short 1 (Reemplazar)</h3><p>Descripción: Edición de alta energía para Reels.</p></div>
+                </div>
+                
+                <div class="video-card" 
+                    data-video-url="https://vimeo.com/1122092969" 
+                    data-thumb-url="https://github.com/ediferv22-lgtm/upwork/blob/main/thumb%20(1).jpg?raw=true">
+                    <div class="video-thumbnail"></div>
+                    <div class="video-info"><h3 id="i18n-video-title-2">Vimeo Short 2 (Reemplazar)</h3><p>Descripción: Corrección de color y música sincronizada.</p></div>
+                </div>
+                
+                <div class="video-card" 
+                    data-video-url="https://vimeo.com/1122092386" 
+                    data-thumb-url="https://github.com/ediferv22-lgtm/upwork/blob/main/thumb%20(2).jpg?raw=true">
+                    <div class="video-thumbnail"></div>
+                    <div class="video-info"><h3 id="i18n-video-title-3">Vimeo Short 3 (Reemplazar)</h3><p>Descripción: Edición de entrevista y subtítulos profesionales.</p></div>
+                </div>
+
+                <div class="video-card" 
+                    data-video-url="https://vimeo.com/1122096284" 
+                    data-thumb-url="https://github.com/ediferv22-lgtm/upwork/blob/main/thumb%20(3).jpg?raw=true">
+                    <div class="video-thumbnail"></div>
+                    <div class="video-info"><h3 id="i18n-video-title-4">YouTube Short 4 (Auto)</h3><p>Descripción: Demo de auto-detección de miniatura.</p></div>
+                </div>
+
+                <div class="video-card" 
+                    data-video-url="https://vimeo.com/1122096448" 
+                    data-thumb-url="https://github.com/ediferv22-lgtm/upwork/blob/main/thumb%20(4).jpg?raw=true">
+                    <div class="video-thumbnail"></div>
+                    <div class="video-info"><h3 id="i18n-video-title-5">YouTube Short 5 (Auto)</h3><p>Descripción: Caso de estudio de retención viral.</p></div>
+                </div>
+
+                <div class="video-card" 
+                    data-video-url="https://vimeo.com/1122096332" 
+                    data-thumb-url="https://github.com/ediferv22-lgtm/upwork/blob/main/thumb%20(5).jpg?raw=true">
+                    <div class="video-thumbnail"></div>
+                    <div class="video-info"><h3 id="i18n-video-title-6">Vimeo Short 6 (Manual)</h3><p>Descripción: Tráiler corto para promoción de servicio.</p></div>
+                </div>
+
+            </div>
+        </section>
+        
+        <section class="final-cta" id="contacto-final">
+            <h2 id="i18n-final-cta-h2">Ready to Hire an Expert Editor?</h2>
+            <p style="color:var(--text-primary); margin-bottom:1.5rem;" id="i18n-final-cta-p">Accept my project proposal via Upwork!</p>
+            
+            <a href="javascript:history.back()" class="cta-button" id="i18n-contact-upwork">✅ Accept Proposal via Upwork</a>
+        </section>
+
+        <footer><p id="i18n-footer">© 2024 Edifer Vásquez | Video Editor Portfolio. All Rights Reserved.</p></footer>
+    </div>
+
+    <a href="javascript:history.back()" id="fixed-cta-button" aria-label="Volver a la Propuesta de Upwork" title="Aceptar Propuesta">
+        <span id="i18n-fixed-cta-text">Accept Proposal</span>
+    </a>
+
+    <button id="scroll-to-top" aria-label="Volver arriba">▲</button>
+
+    <div class="lightbox" id="lightbox">
+        <button class="nav-btn prev-btn" id="prev-btn" aria-label="Video anterior">‹</button>
+        <div class="lightbox-content">
+            <button class="close-btn" id="close-lightbox" aria-label="Cerrar ventana emergente">X</button>
+            <div class="lightbox-video-wrapper">
+                <iframe 
+                    id="video-player" 
+                    src="" 
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen; muted" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+        <button class="nav-btn next-btn" id="next-btn" aria-label="Video siguiente">›</button>
+    </div>
+
+    <script>
+        const convertToEmbedUrl = (url) => {
+            let videoId = null;
+            if (url.includes('youtube.com/watch?v=')) {
+                videoId = new URLSearchParams(new URL(url).search).get('v');
+                return videoId ? `https://www.youtube.com/embed/${videoId}` : '';
+            } else if (url.includes('youtube.com/shorts/')) {
+                videoId = url.split('shorts/')[1].split('?')[0];
+                return videoId ? `https://www.youtube.com/embed/${videoId}` : '';
+            } else if (url.includes('youtu.be/')) {
+                videoId = url.split('youtu.be/')[1].split('?')[0];
+                return videoId ? `https://www.youtube.com/embed/${videoId}` : '';
+            } 
+            else if (url.includes('vimeo.com/')) {
+                const parts = url.split('/');
+                videoId = parts.findLast(p => !isNaN(p) && p.length > 0);
+                return videoId ? `https://player.vimeo.com/video/${videoId}` : '';
+            }
+            return ''; 
+        };
+
+        const getYoutubeThumb = (url) => {
+            let videoId = null;
+            if (url.includes('youtube.com/watch?v=')) {
+                videoId = new URLSearchParams(new URL(url).search).get('v');
+            } else if (url.includes('youtube.com/shorts/')) {
+                videoId = url.split('shorts/')[1].split('?')[0];
+            } else if (url.includes('youtu.be/')) {
+                videoId = url.split('youtu.be/')[1].split('?')[0];
+            }
+            return videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : null;
+        };
+
+        // Traducciones para los títulos del reloj
+        const clockTranslations = {
+            es: {
+                clock_ve: 'VENEZUELA (CCS)',
+                clock_na: 'ESTADOS UNIDOS (NYC)',
+                clock_eu: 'ESPAÑA (MAD)',
+                clock_ch: 'CHINA (SHA)'
+            },
+            en: {
+                clock_ve: 'VENEZUELA (CCS)',
+                clock_na: 'UNITED STATES (NYC)',
+                clock_eu: 'SPAIN (MAD)',
+                clock_ch: 'CHINA (SHA)'
+            }
+        };
+
+        const translations = {
+            es: {
+                title: 'Edifer Vásquez — Portafolio de Editor de Video Experto',
+                meta_desc: 'Edición profesional para Shorts, Reels y TikTok. Especialista en retención y alta conversión.',
+                profile_cert: 'Editor de Video Certificado',
+                profile_name: 'Edifer Vásquez',
+                // FIX: Traducción fiel de la descripción en Inglés
+                profile_desc: 'Soy un <strong>Especialista Certificado</strong> enfocado exclusivamente en <strong>Contenido de Formato Corto de Alto Impacto</strong> (YouTube Shorts, Reels, TikTok y Facebook). Mi misión es tomar su metraje y transformarlo en <strong>videos virales de alta retención</strong> diseñados para impulsar el <strong>engagement</strong> y la conversión. Garantizo un <strong>flujo de trabajo profesional</strong> utilizando <strong>CapCut Pro, Premiere Pro, After Effects y KlingAI</strong> para obtener resultados de la más alta calidad.',
+                send_prop_1: 'Aceptar Propuesta',
+                view_portfolio: 'Ver Portafolio',
+                section_portfolio: 'Portafolio Destacado',
+                final_cta_h2: '¿Listo para Contratar un Editor Experto?',
+                final_cta_p: '¡Acepta mi propuesta de proyecto en Upwork!',
+                contact_upwork: '✅ Aceptar Propuesta de Upwork',
+                footer: '© 2024 Edifer Vásquez | Portafolio de Editor de Video. Todos los derechos reservados.',
+                lang_toggle_text: 'ES / EN',
+                fixed_cta_text: 'Aceptar Propuesta',
+                // FIX: Títulos de Shorts
+                video_title_1: 'Video Vertical 1',
+                video_title_2: 'Video Vertical 2',
+                video_title_3: 'Video Vertical 3',
+                video_title_4: 'Video Vertical 4',
+                video_title_5: 'Video Vertical 5',
+                video_title_6: 'Video Vertical 6',
+                video_desc_common: 'Videos de alta calidad transformados por Edifer Vásquez'
+            },
+            en: {
+                title: 'Edifer Vásquez — Expert Video Editor Portfolio',
+                meta_desc: 'Professional editing for Shorts, Reels, and TikTok. Retention and high-conversion specialist.',
+                profile_cert: 'Certified Video Editor',
+                profile_name: 'Edifer Vásquez',
+                profile_desc: 'I\'m a <strong>Certified Specialist</strong> focused exclusively on <strong>High-Impact Short-Form Content</strong> (YouTube Shorts, Reels, TikTok, and Facebook). My mission is to take your footage and transform it into <strong>high-retention, viral videos</strong> designed to boost <strong>engagement</strong> and conversion. I guarantee a <strong>professional workflow</strong> using <strong>CapCut Pro, Premiere Pro, After Effects, and KlingAI</strong> for the highest-quality results.',
+                send_prop_1: 'Accept Proposal',
+                view_portfolio: 'View Portfolio',
+                section_portfolio: 'Featured Portfolio',
+                final_cta_h2: 'Ready to Hire an Expert Editor?',
+                final_cta_p: 'Accept my project proposal via Upwork!',
+                contact_upwork: '✅ Accept Proposal via Upwork',
+                footer: '© 2024 Edifer Vásquez | Video Editor Portfolio. All Rights Reserved.',
+                lang_toggle_text: 'EN / ES',
+                fixed_cta_text: 'Accept Proposal',
+                // FIX: Títulos de Shorts
+                video_title_1: 'Vertical Video 1',
+                video_title_2: 'Vertical Video 2',
+                video_title_3: 'Vertical Video 3',
+                video_title_4: 'Vertical Video 4',
+                video_title_5: 'Vertical Video 5',
+                video_title_6: 'Vertical Video 6',
+                video_desc_common: 'High-quality videos transformed by Edifer Vásquez'
+            }
+        };
+
+        let videoUrls = [];
+        let currentVideoIndex = -1;
+
+        const setLanguage = (lang) => {
+            const t = translations[lang];
+            const ct = clockTranslations[lang]; 
+
+            document.documentElement.lang = lang;
+            document.getElementById('i18n-title').textContent = t.title;
+            document.title = t.title;
+            document.getElementById('i18n-meta-desc').setAttribute('content', t.meta_desc);
+            document.getElementById('i18n-profile-cert').textContent = t.profile_cert;
+            document.getElementById('i18n-profile-name').textContent = t.profile_name;
+            document.getElementById('i18n-profile-desc').innerHTML = t.profile_desc; // Usamos .innerHTML aquí
+            document.getElementById('i18n-send-prop-1').textContent = t.send_prop_1;
+            document.getElementById('i18n-view-portfolio').textContent = t.view_portfolio;
+            document.getElementById('i18n-section-portfolio').textContent = t.section_portfolio;
+            document.getElementById('i18n-final-cta-h2').textContent = t.final_cta_h2;
+            document.getElementById('i18n-final-cta-p').textContent = t.final_cta_p;
+            document.getElementById('i18n-contact-upwork').textContent = t.contact_upwork;
+            document.getElementById('i18n-footer').textContent = t.footer;
+            document.getElementById('i18n-fixed-cta-text').textContent = t.fixed_cta_text; 
+            const langToggle = document.getElementById('lang-toggle');
+            langToggle.setAttribute('data-lang', lang);
+            langToggle.textContent = t.lang_toggle_text;
+
+            // Traducciones de la Galería
+            for(let i = 1; i <= 6; i++) {
+                const titleElement = document.getElementById(`i18n-video-title-${i}`);
+                if (titleElement) {
+                    titleElement.textContent = t[`video_title_${i}`];
+                }
+            }
+            // Actualizar todas las descripciones de video
+            document.querySelectorAll('.gallery .video-info p').forEach(p => {
+                p.textContent = t.video_desc_common;
+            });
+
+
+            // Actualización de títulos de relojes
+            document.getElementById('i18n-clock-ve').textContent = ct.clock_ve;
+            document.getElementById('i18n-clock-na').textContent = ct.clock_na;
+            document.getElementById('i18n-clock-eu').textContent = ct.clock_eu;
+            document.getElementById('i18n-clock-ch').textContent = ct.clock_ch;
+        };
+
+        const showVideo = (index) => {
+            currentVideoIndex = (index + videoUrls.length) % videoUrls.length;
+            const fullUrl = videoUrls[currentVideoIndex];
+            let embedBaseUrl = convertToEmbedUrl(fullUrl);
+            
+            if (!embedBaseUrl) {
+                console.error("URL de video inválida o no soportada:", fullUrl);
+                return;
+            }
+
+            if (fullUrl.includes('youtube.com') || fullUrl.includes('youtu.be')) {
+                embedBaseUrl += '?autoplay=1&mute=1&controls=1&rel=0&modestbranding=1&disablekb=1&playsinline=1&showinfo=0';
+            } else if (fullUrl.includes('vimeo.com')) {
+                embedBaseUrl += '?autoplay=1&muted=1&dnt=1&playsinline=1&loop=1';
+            }
+            
+            document.getElementById('video-player').src = embedBaseUrl;
+        };
+
+        const nextVideo = () => showVideo(currentVideoIndex + 1);
+        const prevVideo = () => showVideo(currentVideoIndex - 1);
+        
+        const openLightbox = (fullUrl) => {
+            const lightbox = document.getElementById('lightbox');
+            const videoCards = Array.from(document.querySelectorAll('.video-card'));
+            currentVideoIndex = videoCards.findIndex(c => c.getAttribute('data-video-url') === fullUrl);
+
+            if (currentVideoIndex === -1) {
+                 console.error("Video URL not found in gallery:", fullUrl);
+                 return;
+            }
+            
+            showVideo(currentVideoIndex);
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        };
+        const closeLightbox = () => {
+            document.getElementById('video-player').src = 'about:blank'; 
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = '';
+        };
+
+        // --- Lógica del Reloj Mundial (FIXED) ---
+        const updateClocks = () => {
+            const timezones = [
+                // Venezuela (Caracas)
+                { id: 'clock-ve', zone: 'America/Caracas' }, 
+                // Estados Unidos (New York)
+                { id: 'clock-na', zone: 'America/New_York' }, 
+                // España (Madrid)
+                { id: 'clock-eu', zone: 'Europe/Madrid' }, 
+                // China (Shanghai)
+                { id: 'clock-ch', zone: 'Asia/Shanghai' }
+            ];
+
+            // Formato de hora, minuto, segundo y AM/PM en 12 horas
+            const options = { 
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit', 
+                hour12: true,      
+                // Se eliminó timeZoneName para evitar el parpadeo
+            };
+            
+            const now = new Date(); 
+
+            timezones.forEach(({ id, zone }) => {
+                const clockElement = document.getElementById(id);
+                if (clockElement) {
+                    try {
+                        const formatter = new Intl.DateTimeFormat('en-US', { 
+                            ...options,
+                            timeZone: zone
+                        });
+                        
+                        const timeStringWithAMPM = formatter.format(now);
+                        
+                        // Usamos .innerHTML para que las etiquetas <small> se rendericen
+                        clockElement.innerHTML = timeStringWithAMPM.replace(/ (AM|PM)/, ' <small style="font-size: 0.6em; font-weight: 600;">$1</small>');
+                        
+                    } catch (e) {
+                        console.error(`Error fetching time for ${zone}:`, e);
+                        clockElement.textContent = '--:--:--';
+                    }
+                }
+            });
+        };
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const langToggle = document.getElementById('lang-toggle');
+            
+            // Establecer el idioma predeterminado a Inglés ('en')
+            setLanguage('en'); 
+
+            langToggle.addEventListener('click', () => {
+                const currentLang = langToggle.getAttribute('data-lang');
+                setLanguage(currentLang === 'en' ? 'es' : 'en');
+            });
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            const scrollToTopBtn = document.getElementById('scroll-to-top');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 400) scrollToTopBtn.classList.add('show');
+                else scrollToTopBtn.classList.remove('show');
+            });
+            scrollToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+            // Lógica del Video Horizontal Principal con Overlay
+            const mainVideoIframe = document.getElementById('presentation-video');
+            const mainVideoOverlay = document.getElementById('main-video-overlay');
+            const playMainVideoButton = document.getElementById('play-main-video');
+
+            playMainVideoButton.addEventListener('click', () => {
+                const mainVideoUrl = mainVideoIframe.getAttribute('data-video-url');
+                if (mainVideoUrl && mainVideoUrl.startsWith('http')) {
+                    const embedBaseUrl = convertToEmbedUrl(mainVideoUrl);
+                    if (embedBaseUrl) {
+                        if (mainVideoUrl.includes('youtube.com') || mainVideoUrl.includes('youtu.be')) {
+                            mainVideoIframe.src = `${embedBaseUrl}?autoplay=1&controls=1&modestbranding=1&rel=0`;
+                        } else if (mainVideoUrl.includes('vimeo.com')) {
+                            mainVideoIframe.src = `${embedBaseUrl}?autoplay=1&dnt=1&playsinline=1`;
+                        }
+                        mainVideoOverlay.style.display = 'none'; 
+                        mainVideoIframe.style.display = 'block'; 
+                    } else {
+                        console.error("URL del video principal inválida o no soportada.");
+                    }
+                } else {
+                    console.error("Por favor, pegue la URL de su video en el atributo 'data-video-url' del video principal.");
+                }
+            });
+
+            // Configuración de la Galería de Shorts
+            const videoCards = document.querySelectorAll('.video-card');
+            videoUrls = Array.from(videoCards).map(c => c.getAttribute('data-video-url'));
+            
+            videoCards.forEach(c => {
+                const videoUrl = c.getAttribute('data-video-url');
+                const thumbUrlAttr = c.getAttribute('data-thumb-url');
+                const thumbnailDiv = c.querySelector('.video-thumbnail');
+                
+                let thumbnailUrl = null;
+
+                if (thumbUrlAttr && thumbUrlAttr.length > 5) {
+                    thumbnailUrl = thumbUrlAttr;
+                } else if (videoUrl && (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be'))) {
+                    thumbnailUrl = getYoutubeThumb(videoUrl);
+                } 
+
+                if (thumbnailUrl) {
+                    thumbnailDiv.style.backgroundImage = `url('${thumbnailUrl}')`;
+                } else {
+                    console.warn(`No se encontró miniatura para el video: ${videoUrl}. Se usará el color de fondo.`);
+                }
+                
+                c.addEventListener('click', () => openLightbox(videoUrl));
+            });
+            
+            document.getElementById('close-lightbox').addEventListener('click', closeLightbox);
+            document.getElementById('lightbox').addEventListener('click', (e) => { if (e.target === document.getElementById('lightbox')) closeLightbox(); });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowRight' && document.getElementById('lightbox').classList.contains('active')) nextVideo();
+                if (e.key === 'ArrowLeft' && document.getElementById('lightbox').classList.contains('active')) prevVideo();
+            });
+            document.getElementById('prev-btn').addEventListener('click', prevVideo);
+            document.getElementById('next-btn').addEventListener('click', nextVideo);
+
+            let touchstartX = 0, touchendX = 0;
+            const lightboxContent = document.querySelector('.lightbox-content');
+            lightboxContent.addEventListener('touchstart', e => touchstartX = e.changedTouches[0].screenX);
+            lightboxContent.addEventListener('touchend', e => { touchendX = e.changedTouches[0].screenX; if (touchendX - touchstartX > 50) prevVideo(); if (touchstartX - touchendX > 50) nextVideo(); });
+
+            // Iniciar y actualizar el reloj cada segundo
+            updateClocks();
+            setInterval(updateClocks, 1000);
+        });
+    </script>
+</body>
+</html>
