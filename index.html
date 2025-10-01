@@ -270,13 +270,54 @@
             line-height: 1.5; /* Aumentado line-height para legibilidad */
         }
 
-        /* GALLERY (RESTO DE ESTILOS NO MODIFICADOS) */
+        /* GALLERY */
         .section-title { font-size: 2rem; font-weight: 800; margin-bottom: 1.5rem; border-left: 4px solid var(--accent1); padding-left: 10px; }
         .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
         @media (max-width: 900px) { .gallery { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 600px) { .gallery { grid-template-columns: 1fr; } }
-        .video-card { background: var(--card-bg); border-radius: var(--radius); cursor: pointer; transition: var(--transition); box-shadow: var(--shadow); }
-        .video-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(226,77,168,0.2); }
+        
+        .video-card { 
+            background: var(--card-bg); 
+            border-radius: var(--radius); 
+            cursor: pointer; 
+            transition: var(--transition); 
+            box-shadow: var(--shadow);
+            position: relative; /* Necesario para posicionar la estrella */
+        }
+
+        .video-card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 10px 30px rgba(226,77,168,0.2); 
+        }
+
+        /* ESTILOS DE LA ESTRELLA (BOTÓN DE FAVORITO) */
+        .favorite-toggle {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            line-height: 1;
+            cursor: pointer;
+            z-index: 10; 
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+            /* Color por defecto: Gris (No favorito) */
+            color: rgba(255, 255, 255, 0.3);
+            transition: color 0.2s, transform 0.1s;
+        }
+
+        /* Hover: Se ilumina ligeramente */
+        .favorite-toggle:hover {
+            color: rgba(255, 255, 255, 0.6);
+            transform: scale(1.1);
+        }
+
+        /* Estado "Favorito": Color de acento */
+        .video-card.preferred .favorite-toggle {
+            color: gold; 
+            text-shadow: 0 0 10px gold, 0 0 5px rgba(0, 0, 0, 0.7);
+        }
+        /* FIN ESTILOS DE LA ESTRELLA */
+
         .video-thumbnail { width: 100%; height: 0; padding-bottom: 177.77%; position: relative; background-color: var(--card-bg); background-size: cover; background-position: center; background-repeat: no-repeat; border-radius: var(--radius) var(--radius) 0 0; overflow: hidden; }
         .video-thumbnail::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.2); z-index: 1; pointer-events: none; border-radius: var(--radius) var(--radius) 0 0; }
         .video-thumbnail::after { content: '▶'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 3rem; color: rgba(255, 255, 255, 0.9); text-shadow: 0 0 10px rgba(0, 0, 0, 0.8); pointer-events: none; z-index: 5; }
@@ -383,48 +424,86 @@
             <div class="gallery" id="gallery-container">
                 
                 <div class="video-card" 
+                    data-video-id="vimeo-1" 
                     data-video-url="https://vimeo.com/1122092874" 
                     data-thumb-url="https://github.com/ediferv22-lgtm/upwork/blob/main/thumb.jpg?raw=true">
+                    <span class="favorite-toggle" title="Marcar como favorito">★</span>
                     <div class="video-thumbnail"></div>
-                    <div class="video-info"><h3 id="i18n-video-title-1">Vimeo Short 1 (Reemplazar)</h3><p>Descripción: Edición de alta energía para Reels.</p></div>
+                    <div class="video-info"><h3 id="i18n-video-title-1">Vimeo Short 1</h3><p>Descripción: Edición de alta energía para Reels.</p></div>
                 </div>
                 
                 <div class="video-card" 
+                    data-video-id="vimeo-2" 
                     data-video-url="https://vimeo.com/1122092969" 
                     data-thumb-url="https://github.com/ediferv22-lgtm/upwork/blob/main/thumb%20(1).jpg?raw=true">
+                    <span class="favorite-toggle" title="Marcar como favorito">★</span>
                     <div class="video-thumbnail"></div>
-                    <div class="video-info"><h3 id="i18n-video-title-2">Vimeo Short 2 (Reemplazar)</h3><p>Descripción: Corrección de color y música sincronizada.</p></div>
+                    <div class="video-info"><h3 id="i18n-video-title-2">Vimeo Short 2</h3><p>Descripción: Corrección de color y música sincronizada.</p></div>
                 </div>
                 
                 <div class="video-card" 
+                    data-video-id="vimeo-3" 
                     data-video-url="https://vimeo.com/1122092386" 
                     data-thumb-url="https://github.com/ediferv22-lgtm/upwork/blob/main/thumb%20(2).jpg?raw=true">
+                    <span class="favorite-toggle" title="Marcar como favorito">★</span>
                     <div class="video-thumbnail"></div>
-                    <div class="video-info"><h3 id="i18n-video-title-3">Vimeo Short 3 (Reemplazar)</h3><p>Descripción: Edición de entrevista y subtítulos profesionales.</p></div>
+                    <div class="video-info"><h3 id="i18n-video-title-3">Vimeo Short 3</h3><p>Descripción: Edición de entrevista y subtítulos profesionales.</p></div>
                 </div>
 
                 <div class="video-card" 
+                    data-video-id="vimeo-4" 
                     data-video-url="https://vimeo.com/1122502897" 
                     data-thumb-url="https://github.com/ediferv22-lgtm/upwork/blob/main/thumb%20(6).jpg?raw=true">
+                    <span class="favorite-toggle" title="Marcar como favorito">★</span>
                     <div class="video-thumbnail"></div>
-                    <div class="video-info"><h3 id="i18n-video-title-4">YouTube Short 4 (Auto)</h3><p>Descripción: Demo de auto-detección de miniatura.</p></div>
+                    <div class="video-info"><h3 id="i18n-video-title-4">YouTube Short 4</h3><p>Descripción: Demo de auto-detección de miniatura.</p></div>
                 </div>
 
                 <div class="video-card" 
+                    data-video-id="vimeo-5" 
                     data-video-url="https://vimeo.com/1122096448" 
                     data-thumb-url="https://github.com/ediferv22-lgtm/upwork/blob/main/thumb%20(4).jpg?raw=true">
+                    <span class="favorite-toggle" title="Marcar como favorito">★</span>
                     <div class="video-thumbnail"></div>
-                    <div class="video-info"><h3 id="i18n-video-title-5">YouTube Short 5 (Auto)</h3><p>Descripción: Caso de estudio de retención viral.</p></div>
+                    <div class="video-info"><h3 id="i18n-video-title-5">YouTube Short 5</h3><p>Descripción: Caso de estudio de retención viral.</p></div>
                 </div>
 
                 <div class="video-card" 
+                    data-video-id="vimeo-6" 
                     data-video-url="https://vimeo.com/1122096332" 
                     data-thumb-url="https://github.com/ediferv22-lgtm/upwork/blob/main/thumb%20(5).jpg?raw=true">
+                    <span class="favorite-toggle" title="Marcar como favorito">★</span>
                     <div class="video-thumbnail"></div>
-                    <div class="video-info"><h3 id="i18n-video-title-6">Vimeo Short 6 (Manual)</h3><p>Descripción: Tráiler corto para promoción de servicio.</p></div>
+                    <div class="video-info"><h3 id="i18n-video-title-6">Vimeo Short 6</h3><p>Descripción: Tráiler corto para promoción de servicio.</p></div>
                 </div>
 
-            </div>
+                <div class="video-card" 
+                    data-video-id="vimeo-7" 
+                    data-video-url="https://vimeo.com/1122092874" 
+                    data-thumb-url="https://github.com/ediferv22-lgtm/upwork/blob/main/thumb.jpg?raw=true">
+                    <span class="favorite-toggle" title="Marcar como favorito">★</span>
+                    <div class="video-thumbnail"></div>
+                    <div class="video-info"><h3 id="i18n-video-title-7">Vimeo Short 7</h3><p>Descripción: Videos de alta calidad transformados por Edifer Vásquez</p></div>
+                </div>
+                
+                <div class="video-card" 
+                    data-video-id="vimeo-8" 
+                    data-video-url="https://vimeo.com/1122092969" 
+                    data-thumb-url="https://github.com/ediferv22-lgtm/upwork/blob/main/thumb%20(1).jpg?raw=true">
+                    <span class="favorite-toggle" title="Marcar como favorito">★</span>
+                    <div class="video-thumbnail"></div>
+                    <div class="video-info"><h3 id="i18n-video-title-8">Vimeo Short 8</h3><p>Descripción: Videos de alta calidad transformados por Edifer Vásquez</p></div>
+                </div>
+                
+                <div class="video-card" 
+                    data-video-id="vimeo-9" 
+                    data-video-url="https://vimeo.com/1122092386" 
+                    data-thumb-url="https://github.com/ediferv22-lgtm/upwork/blob/main/thumb%20(2).jpg?raw=true">
+                    <span class="favorite-toggle" title="Marcar como favorito">★</span>
+                    <div class="video-thumbnail"></div>
+                    <div class="video-info"><h3 id="i18n-video-title-9">Vimeo Short 9</h3><p>Descripción: Videos de alta calidad transformados por Edifer Vásquez</p></div>
+                </div>
+                </div>
         </section>
         
         <section class="final-cta" id="contacto-final">
@@ -525,13 +604,16 @@
                 footer: '© 2024 Edifer Vásquez | Portafolio de Editor de Video. Todos los derechos reservados.',
                 lang_toggle_text: 'ES / EN',
                 fixed_cta_text: 'Aceptar Propuesta',
-                // FIX: Títulos de Shorts
+                // Títulos de Shorts
                 video_title_1: 'Video Vertical 1',
                 video_title_2: 'Video Vertical 2',
                 video_title_3: 'Video Vertical 3',
                 video_title_4: 'Video Vertical 4',
                 video_title_5: 'Video Vertical 5',
                 video_title_6: 'Video Vertical 6',
+                video_title_7: 'Video Vertical 7', 
+                video_title_8: 'Video Vertical 8', 
+                video_title_9: 'Video Vertical 9', 
                 video_desc_common: 'Videos de alta calidad transformados por Edifer Vásquez'
             },
             en: {
@@ -549,19 +631,125 @@
                 footer: '© 2024 Edifer Vásquez | Video Editor Portfolio. All Rights Reserved.',
                 lang_toggle_text: 'EN / ES',
                 fixed_cta_text: 'Accept Proposal',
-                // FIX: Títulos de Shorts
+                // Títulos de Shorts
                 video_title_1: 'Vertical Video 1',
                 video_title_2: 'Vertical Video 2',
                 video_title_3: 'Vertical Video 3',
                 video_title_4: 'Vertical Video 4',
                 video_title_5: 'Vertical Video 5',
                 video_title_6: 'Vertical Video 6',
+                video_title_7: 'Vertical Video 7', 
+                video_title_8: 'Vertical Video 8', 
+                video_title_9: 'Vertical Video 9', 
                 video_desc_common: 'High-quality videos transformed by Edifer Vásquez'
             }
         };
 
         let videoUrls = [];
         let currentVideoIndex = -1;
+        const FAVORITES_KEY = 'edifer_video_favorites'; // Clave para LocalStorage
+
+        /* --- FUNCIONES DE FAVORITOS --- */
+
+        /**
+         * Obtiene la lista de IDs de videos favoritos de LocalStorage.
+         * @returns {Set<string>} Conjunto de IDs de video favoritos.
+         */
+        const getFavorites = () => {
+            try {
+                const favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
+                return new Set(favorites);
+            } catch (e) {
+                console.error("Error al leer favoritos de LocalStorage:", e);
+                return new Set();
+            }
+        };
+
+        /**
+         * Guarda un nuevo conjunto de IDs de videos favoritos en LocalStorage.
+         * @param {Set<string>} favorites Set de IDs a guardar.
+         */
+        const saveFavorites = (favorites) => {
+            try {
+                localStorage.setItem(FAVORITES_KEY, JSON.stringify(Array.from(favorites)));
+            } catch (e) {
+                console.error("Error al guardar favoritos en LocalStorage:", e);
+            }
+        };
+
+        /**
+         * Reordena las tarjetas en el DOM: favoritos primero.
+         */
+        const reorderGallery = () => {
+            const galleryContainer = document.getElementById('gallery-container');
+            const videoCards = Array.from(document.querySelectorAll('.video-card'));
+            const favorites = getFavorites();
+
+            // 1. Separar tarjetas
+            const preferredCards = [];
+            const regularCards = [];
+
+            videoCards.forEach(card => {
+                const videoId = card.getAttribute('data-video-id');
+                // 2. Marcar la clase CSS y categorizar
+                if (favorites.has(videoId)) {
+                    card.classList.add('preferred');
+                    preferredCards.push(card);
+                } else {
+                    card.classList.remove('preferred');
+                    regularCards.push(card);
+                }
+            });
+
+            // 3. Vaciar y reconstruir el DOM en el orden correcto
+            galleryContainer.innerHTML = '';
+            const reorderedCards = [...preferredCards, ...regularCards];
+            reorderedCards.forEach(card => galleryContainer.appendChild(card));
+            
+            // 4. Actualizar la lista de URLs (importante para la navegación del Lightbox)
+            videoUrls = reorderedCards.map(c => c.getAttribute('data-video-url'));
+            
+            // 5. Reasignar eventos (solo al botón de favorito, el clic en la tarjeta ya está asignado globalmente)
+            attachFavoriteEventListeners();
+        };
+
+        /**
+         * Maneja el clic en la estrella de favorito.
+         * @param {Event} e Evento de click.
+         */
+        const handleFavoriteToggle = (e) => {
+            // Detener la propagación para que no se abra el lightbox
+            e.stopPropagation(); 
+            const card = e.currentTarget.closest('.video-card');
+            const videoId = card.getAttribute('data-video-id');
+            const favorites = getFavorites();
+
+            if (favorites.has(videoId)) {
+                favorites.delete(videoId); // Desmarcar
+            } else {
+                favorites.add(videoId); // Marcar
+            }
+
+            saveFavorites(favorites);
+            
+            // Reordenar la galería inmediatamente
+            reorderGallery(); 
+        };
+
+        /**
+         * Asigna los eventos de clic a todos los botones de favorito.
+         */
+        const attachFavoriteEventListeners = () => {
+            document.querySelectorAll('.favorite-toggle').forEach(toggle => {
+                // Eliminar cualquier listener anterior para evitar duplicados
+                toggle.removeEventListener('click', handleFavoriteToggle); 
+                // Añadir el nuevo listener
+                toggle.addEventListener('click', handleFavoriteToggle);
+            });
+        };
+
+        /* --- FIN FUNCIONES DE FAVORITOS --- */
+
 
         const setLanguage = (lang) => {
             const t = translations[lang];
@@ -586,8 +774,8 @@
             langToggle.setAttribute('data-lang', lang);
             langToggle.textContent = t.lang_toggle_text;
 
-            // Traducciones de la Galería
-            for(let i = 1; i <= 6; i++) {
+            // Traducciones de la Galería (actualizado hasta el video 9)
+            for(let i = 1; i <= 9; i++) {
                 const titleElement = document.getElementById(`i18n-video-title-${i}`);
                 if (titleElement) {
                     titleElement.textContent = t[`video_title_${i}`];
@@ -630,8 +818,8 @@
         
         const openLightbox = (fullUrl) => {
             const lightbox = document.getElementById('lightbox');
-            const videoCards = Array.from(document.querySelectorAll('.video-card'));
-            currentVideoIndex = videoCards.findIndex(c => c.getAttribute('data-video-url') === fullUrl);
+            // Usamos la lista de videoUrls (que ya está reordenada) para encontrar el índice.
+            currentVideoIndex = videoUrls.findIndex(url => url === fullUrl);
 
             if (currentVideoIndex === -1) {
                  console.error("Video URL not found in gallery:", fullUrl);
@@ -746,9 +934,21 @@
             });
 
             // Configuración de la Galería de Shorts
-            const videoCards = document.querySelectorAll('.video-card');
-            videoUrls = Array.from(videoCards).map(c => c.getAttribute('data-video-url'));
+            const videoCards = Array.from(document.querySelectorAll('.video-card'));
             
+            // 1. Asignar el atributo 'data-video-id' si falta (para que LocalStorage funcione)
+            videoCards.forEach((c, index) => {
+                if (!c.getAttribute('data-video-id')) {
+                    // Usar el video-id que yo asigné en el HTML modificado (vimeo-1, vimeo-2, etc.)
+                    // En un caso real, esto debería ser un ID único del backend.
+                    c.setAttribute('data-video-id', `auto-id-${index}`); 
+                }
+            });
+
+            // 2. Inicializar y reordenar la galería basada en LocalStorage
+            reorderGallery();
+            
+            // 3. Inicializar miniaturas y eventos de Lightbox (clic en la tarjeta)
             videoCards.forEach(c => {
                 const videoUrl = c.getAttribute('data-video-url');
                 const thumbUrlAttr = c.getAttribute('data-thumb-url');
@@ -768,9 +968,16 @@
                     console.warn(`No se encontró miniatura para el video: ${videoUrl}. Se usará el color de fondo.`);
                 }
                 
-                c.addEventListener('click', () => openLightbox(videoUrl));
+                // Evento para abrir el Lightbox (al hacer clic en cualquier parte de la tarjeta)
+                c.addEventListener('click', (e) => {
+                     // Asegurarse de que el clic no provino del botón de favorito
+                    if (!e.target.classList.contains('favorite-toggle')) {
+                        openLightbox(videoUrl);
+                    }
+                });
             });
             
+            // 4. Lightbox y Navegación
             document.getElementById('close-lightbox').addEventListener('click', closeLightbox);
             document.getElementById('lightbox').addEventListener('click', (e) => { if (e.target === document.getElementById('lightbox')) closeLightbox(); });
             document.addEventListener('keydown', (e) => {
@@ -786,7 +993,7 @@
             lightboxContent.addEventListener('touchstart', e => touchstartX = e.changedTouches[0].screenX);
             lightboxContent.addEventListener('touchend', e => { touchendX = e.changedTouches[0].screenX; if (touchendX - touchstartX > 50) prevVideo(); if (touchstartX - touchendX > 50) nextVideo(); });
 
-            // Iniciar y actualizar el reloj cada segundo
+            // 5. Iniciar y actualizar el reloj cada segundo
             updateClocks();
             setInterval(updateClocks, 1000);
         });
