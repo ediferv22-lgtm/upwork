@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en"> <head>
+<html lang="en"> 
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="i18n-title">Edifer Vásquez — Portafolio de Editor de Video Experto</title>
@@ -190,6 +191,26 @@
             font-weight: 800;
             color: var(--text-primary);
             line-height: 1;
+            /* FIX: Para alinear horizontalmente la hora y AM/PM y evitar el parpadeo */
+            display: flex; 
+            justify-content: center;
+            align-items: flex-end; /* Alinea AM/PM con la base de la hora */
+        }
+        
+        /* Nuevo estilo para la hora principal (main time) */
+        .clock-display .time-main {
+            line-height: 1;
+        }
+
+        /* Nuevo estilo para el AM/PM (Ahora como span fijo) */
+        .clock-display .time-ampm {
+            font-size: 0.75rem; 
+            font-weight: 600;
+            color: var(--text-primary);
+            padding-left: 5px; 
+            /* FIX: Asegura un espacio fijo para evitar saltos de línea al cambiar el contenido */
+            min-width: 35px; 
+            line-height: 1.5; /* Ajuste para centrado vertical */
         }
         
         /* Responsive adjustment for small screens (1 column) */
@@ -205,6 +226,12 @@
             /* REDUCIDO: Tamaño del dígito en móvil */
             .clock-display p {
                 font-size: 1.5rem; 
+            }
+            /* REDUCIDO: Tamaño del dígito en móvil */
+            .clock-display .time-ampm {
+                font-size: 0.6rem;
+                padding-left: 3px;
+                min-width: 25px;
             }
         }
         /* FIN ESTILOS DE RELOJ */
@@ -382,19 +409,19 @@
                     <div class="clocks-container">
                         <div class="clock-display">
                             <h4 id="i18n-clock-ve">VENEZUELA (CCS)</h4>
-                            <p id="clock-ve" class="time-display">--:--:--</p>
+                            <p id="clock-ve" class="time-display"><span class="time-main">--:--:--</span><span class="time-ampm"></span></p>
                         </div>
                         <div class="clock-display">
                             <h4 id="i18n-clock-na">ESTADOS UNIDOS (NYC)</h4>
-                            <p id="clock-na" class="time-display">--:--:--</p>
+                            <p id="clock-na" class="time-display"><span class="time-main">--:--:--</span><span class="time-ampm"></span></p>
                         </div>
                         <div class="clock-display">
                             <h4 id="i18n-clock-eu">ESPAÑA (MAD)</h4>
-                            <p id="clock-eu" class="time-display">--:--:--</p>
+                            <p id="clock-eu" class="time-display"><span class="time-main">--:--:--</span><span class="time-ampm"></span></p>
                         </div>
                         <div class="clock-display">
                             <h4 id="i18n-clock-ch">CHINA (SHA)</h4>
-                            <p id="clock-ch" class="time-display">--:--:--</p>
+                            <p id="clock-ch" class="time-display"><span class="time-main">--:--:--</span><span class="time-ampm"></span></p>
                         </div>
                     </div>
                 </div>
@@ -832,7 +859,7 @@
             document.body.style.overflow = '';
         };
 
-        // --- Lógica del Reloj Mundial (FIXED) ---
+        // --- Lógica del Reloj Mundial (FIXED para incluir AM/PM en China) ---
         const updateClocks = () => {
             const timezones = [
                 // Venezuela (Caracas)
@@ -841,17 +868,16 @@
                 { id: 'clock-na', zone: 'America/New_York' }, 
                 // España (Madrid)
                 { id: 'clock-eu', zone: 'Europe/Madrid' }, 
-                // China (Shanghai)
+                // China (Shanghai) - **MODIFICADO para 12h y AM/PM**
                 { id: 'clock-ch', zone: 'Asia/Shanghai' }
             ];
 
-            // Formato de hora, minuto, segundo y AM/PM en 12 horas
-            const options = { 
+            // Formato de hora, minuto, segundo y AM/PM en 12 horas (APLICADO A TODOS)
+            const options12h = { 
                 hour: '2-digit',
                 minute: '2-digit',
                 second: '2-digit', 
                 hour12: true,      
-                // Se eliminó timeZoneName para evitar el parpadeo
             };
             
             const now = new Date(); 
@@ -860,19 +886,34 @@
                 const clockElement = document.getElementById(id);
                 if (clockElement) {
                     try {
+                        // Todos los relojes usan 12 horas y la configuración de localización para AM/PM
                         const formatter = new Intl.DateTimeFormat('en-US', { 
-                            ...options,
+                            ...options12h,
                             timeZone: zone
                         });
                         
-                        const timeStringWithAMPM = formatter.format(now);
+                        const timeString = formatter.format(now);
                         
-                        // Usamos .innerHTML para que las etiquetas <small> se rendericen
-                        clockElement.innerHTML = timeStringWithAMPM.replace(/ (AM|PM)/, ' <small style="font-size: 0.6em; font-weight: 600;">$1</small>');
+                        const mainTimeSpan = clockElement.querySelector('.time-main');
+                        const ampmSpan = clockElement.querySelector('.time-ampm');
+                        
+                        // Separar la hora principal del AM/PM para evitar el parpadeo
+                        const parts = timeString.split(' ');
+                        
+                        // Asegurar que haya dos partes antes de asignar (caso de error en el formato de Intl)
+                        if (parts.length === 2) {
+                            mainTimeSpan.textContent = parts[0];
+                            ampmSpan.textContent = parts[1];
+                        } else {
+                            // Fallback o si el formato es unexpected
+                            mainTimeSpan.textContent = timeString;
+                            ampmSpan.textContent = '';
+                        }
                         
                     } catch (e) {
                         console.error(`Error fetching time for ${zone}:`, e);
-                        clockElement.textContent = '--:--:--';
+                        clockElement.querySelector('.time-main').textContent = '--:--:--';
+                        clockElement.querySelector('.time-ampm').textContent = '';
                     }
                 }
             });
