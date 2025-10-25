@@ -367,21 +367,16 @@
                 
                 <div class="video-container-autoplay">
                     
-                    <div class="video-overlay" id="main-video-overlay">
-                        <img src="https://github.com/ediferv22-lgtm/upwork/blob/main/WhatsApp%20Image%202025-09-24%20at%204.57.58%20PM.jpeg?raw=true" alt="Miniatura del video principal">
-                        <button id="play-main-video" aria-label="Reproducir video">▶</button>
-                    </div>
-
                     <iframe 
                         id="presentation-video"
                         data-video-url="https://www.youtube.com/watch?v=7MR_aEggj2E" 
                         src="about:blank"
                         title="Video de Presentación" 
-                        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                         allowfullscreen
-                        style="display: none;"> 
+                        style="display: block;"> 
                     </iframe>
-                </div>
+                    </div>
 
                 <div class="video-padding-content">
                     <div class="clocks-container">
@@ -805,6 +800,7 @@
             }
 
             if (fullUrl.includes('youtube.com') || fullUrl.includes('youtu.be')) {
+                // Se agregó `muted=1` para asegurar el autoplay en la mayoría de los navegadores
                 embedBaseUrl += '?autoplay=1&mute=1&controls=1&rel=0&modestbranding=1&disablekb=1&playsinline=1&showinfo=0';
             } else if (fullUrl.includes('vimeo.com')) {
                 embedBaseUrl += '?autoplay=1&muted=1&dnt=1&playsinline=1&loop=1';
@@ -882,6 +878,36 @@
             });
         };
 
+        // ************** INICIO: Función para inicializar el video principal con Autoplay **************
+        const initializeMainVideoAutoplay = () => {
+            const mainVideoIframe = document.getElementById('presentation-video');
+            const mainVideoUrl = mainVideoIframe.getAttribute('data-video-url');
+            
+            if (mainVideoUrl && mainVideoUrl.startsWith('http')) {
+                const embedBaseUrl = convertToEmbedUrl(mainVideoUrl);
+                if (embedBaseUrl) {
+                    let embedUrl = embedBaseUrl;
+                    
+                    // Añadir parámetros de Autoplay y Mute para cumplir con las políticas modernas de navegadores
+                    if (mainVideoUrl.includes('youtube.com') || mainVideoUrl.includes('youtu.be')) {
+                        // YouTube: autoplay=1 y mute=1 son obligatorios para el autoplay sin interacción
+                        embedUrl += '?autoplay=1&mute=1&controls=1&modestbranding=1&rel=0';
+                    } else if (mainVideoUrl.includes('vimeo.com')) {
+                        // Vimeo: autoplay=1 y muted=1 son obligatorios
+                        embedUrl += '?autoplay=1&muted=1&dnt=1&playsinline=1';
+                    }
+                    
+                    mainVideoIframe.src = embedUrl;
+                    // El estilo display: block; ya se establece en el HTML modificado.
+                } else {
+                    console.error("URL del video principal inválida o no soportada para el autoplay.");
+                }
+            } else {
+                console.error("URL del video principal no definida.");
+            }
+        };
+        // ************** FIN: Función para inicializar el video principal con Autoplay **************
+
 
         document.addEventListener('DOMContentLoaded', () => {
             const langToggle = document.getElementById('lang-toggle');
@@ -908,30 +934,9 @@
             });
             scrollToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-            // Lógica del Video Horizontal Principal con Overlay
-            const mainVideoIframe = document.getElementById('presentation-video');
-            const mainVideoOverlay = document.getElementById('main-video-overlay');
-            const playMainVideoButton = document.getElementById('play-main-video');
-
-            playMainVideoButton.addEventListener('click', () => {
-                const mainVideoUrl = mainVideoIframe.getAttribute('data-video-url');
-                if (mainVideoUrl && mainVideoUrl.startsWith('http')) {
-                    const embedBaseUrl = convertToEmbedUrl(mainVideoUrl);
-                    if (embedBaseUrl) {
-                        if (mainVideoUrl.includes('youtube.com') || mainVideoUrl.includes('youtu.be')) {
-                            mainVideoIframe.src = `${embedBaseUrl}?autoplay=1&controls=1&modestbranding=1&rel=0`;
-                        } else if (mainVideoUrl.includes('vimeo.com')) {
-                            mainVideoIframe.src = `${embedBaseUrl}?autoplay=1&dnt=1&playsinline=1`;
-                        }
-                        mainVideoOverlay.style.display = 'none'; 
-                        mainVideoIframe.style.display = 'block'; 
-                    } else {
-                        console.error("URL del video principal inválida o no soportada.");
-                    }
-                } else {
-                    console.error("Por favor, pegue la URL de su video en el atributo 'data-video-url' del video principal.");
-                }
-            });
+            // ************** INICIO: Ejecución del Autoplay del Video Principal **************
+            initializeMainVideoAutoplay();
+            // ************** FIN: Ejecución del Autoplay del Video Principal **************
 
             // Configuración de la Galería de Shorts
             const videoCards = Array.from(document.querySelectorAll('.video-card'));
@@ -1000,29 +1005,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
