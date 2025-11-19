@@ -351,7 +351,48 @@
         .video-info { padding: 1rem; }
         .video-info h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
         .video-info p { font-size: 0.85rem; color: var(--text-secondary); }
+        
+        /* =========================
+           NUEVA SECCIÓN: VIDEOS HORIZONTALES (16:9)
+           ========================= */
+        .horizontal-videos {
+            margin-top: 3rem; /* Espacio después de la galería vertical */
+        }
 
+        .horizontal-grid {
+            display: grid;
+            /* Dos columnas iguales con espacio */
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 1.5rem;
+        }
+
+        /* Contenedor responsivo 16:9 */
+        .video-16-9-container {
+            width: 100%; 
+            height: 0;
+            /* 9/16 = 56.25% (para la proporción 16:9) */
+            padding-bottom: 56.25%; 
+            position: relative;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .video-16-9-container iframe {
+            position: absolute; 
+            top: 0; 
+            left: 0;
+            width: 100%; 
+            height: 100%;
+            border: none;
+        }
+
+        /* Media query para móviles (una sola columna) */
+        @media (max-width: 900px) {
+            .horizontal-grid { 
+                grid-template-columns: 1fr; 
+            }
+        }
         /* CTA FLOTANTE Y LIGHTBOX (RESTO DE ESTILOS NO MODIFICADOS) */
         #fixed-cta-button { position: fixed; bottom: 20px; left: 20px; background: linear-gradient(90deg, var(--accent1), var(--accent2)); color: var(--bg); width: 120px; height: 120px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; text-decoration: none; font-weight: 800; font-size: 0.9rem; padding: 10px; box-shadow: var(--glow); transform: scale(1); animation: pulse 2s infinite; z-index: 99; transition: transform 0.2s; line-height: 1.2; }
         #fixed-cta-button:hover { transform: scale(1.05); animation: none; box-shadow: 0 8px 25px rgba(226,77,168,0.3); }
@@ -525,9 +566,32 @@
                     <div class="video-thumbnail"></div>
                     <div class="video-info"><h3 id="i18n-video-title-9">Vimeo Short 9</h3><p>Descripción: Videos de alta calidad transformados por Edifer Vásquez</p></div>
                 </div>
-                </div>
         </section>
         
+        <section class="horizontal-videos">
+            <h2 class="section-title" id="i18n-section-horizontal">Full-Length Videos (16:9)</h2>
+            <div class="horizontal-grid">
+                
+                <div class="video-16-9-container">
+                    <iframe 
+                        src="https://youtu.be/m1gtgBAYvHs>" 
+                        title="Video Horizontal Ejemplo 1" 
+                        allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+
+                <div class="video-16-9-container">
+                    <iframe 
+                        src="https://youtu.be/jOBm4llkusQ" 
+                        title="Video Horizontal Ejemplo 2" 
+                        allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                
+            </div>
+        </section>
         <section class="final-cta" id="contacto-final">
             <h2 id="i18n-final-cta-h2">Ready to Hire an Expert Editor?</h2>
             <p style="color:var(--text-primary); margin-bottom:1.5rem;" id="i18n-final-cta-p">Accept my project proposal via Upwork!</p>
@@ -636,7 +700,10 @@
                 video_title_7: 'Video Vertical 7', 
                 video_title_8: 'Video Vertical 8', 
                 video_title_9: 'Video Vertical 9', 
-                video_desc_common: 'Videos de alta calidad transformados por Edifer Vásquez'
+                video_desc_common: 'Videos de alta calidad transformados por Edifer Vásquez',
+                // INICIO: CAMBIOS SOLICITADOS (Traducción para el nuevo título)
+                section_horizontal: 'Videos de Formato Largo (16:9)'
+                // FIN: CAMBIOS SOLICITADOS
             },
             en: {
                 title: 'Edifer Vásquez — Expert Video Editor Portfolio',
@@ -663,7 +730,10 @@
                 video_title_7: 'Vertical Video 7', 
                 video_title_8: 'Vertical Video 8', 
                 video_title_9: 'Vertical Video 9', 
-                video_desc_common: 'High-quality videos transformed by Edifer Vásquez'
+                video_desc_common: 'High-quality videos transformed by Edifer Vásquez',
+                // INICIO: CAMBIOS SOLICITADOS (Traducción para el nuevo título)
+                section_horizontal: 'Full-Length Videos (16:9)'
+                // FIN: CAMBIOS SOLICITADOS
             }
         };
 
@@ -787,6 +857,12 @@
             document.getElementById('i18n-send-prop-1').textContent = t.send_prop_1;
             document.getElementById('i18n-view-portfolio').textContent = t.view_portfolio;
             document.getElementById('i18n-section-portfolio').textContent = t.section_portfolio;
+            
+            // INICIO: CAMBIOS SOLICITADOS (Aplicar traducción para el nuevo título)
+            const horizontalTitle = document.getElementById('i18n-section-horizontal');
+            if (horizontalTitle) horizontalTitle.textContent = t.section_horizontal;
+            // FIN: CAMBIOS SOLICITADOS
+            
             document.getElementById('i18n-final-cta-h2').textContent = t.final_cta_h2;
             document.getElementById('i18n-final-cta-p').textContent = t.final_cta_p;
             document.getElementById('i18n-contact-upwork').textContent = t.contact_upwork;
@@ -1046,9 +1122,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
